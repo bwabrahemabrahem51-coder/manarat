@@ -193,6 +193,21 @@ input,textarea,select{
   font:inherit;padding:11px 12px;border:1.5px solid var(--bd);border-radius:var(--r-sm);
   background:var(--soft);color:var(--tx);width:100%;transition:border-color .15s,background .15s;
 }
+
+/* ثيم قائمة الاختيار: متناسق مع ألوان التطبيق الحالية */
+select{
+  color-scheme:dark;
+  accent-color:var(--gold, var(--pri));
+}
+select option,
+select optgroup{
+  background:var(--card);
+  color:var(--tx);
+}
+select option:checked{
+  background:var(--pri);
+  color:var(--onpri, #fff);
+}
 input:focus,textarea:focus,select:focus{border-color:var(--pri);background:var(--card)}
 textarea{resize:vertical;min-height:60px}
 .acts{display:flex;gap:8px;flex-wrap:wrap;margin-top:4px}
@@ -2950,19 +2965,23 @@ function wlOffice() {
   setTimeout(() => { const i = $('oc'); if (i) i.focus(); }, 60);
 }
 async function doOffice() {
-  const v = $('oc') ? $('oc').value.trim() : '';
-  if (!v) return setSyncMsg('اكتب رمز المكتب.', 1);
-  if (v === OFFICE_CODE) {
-    let s = null;
-    try { const r = await sb.auth.getSession(); s = r.data && r.data.session; } catch (e) {}
-    if (s && s.user && String(s.user.email || '').toLowerCase() === OFFICE_EMAIL.toLowerCase()) { sbUser = s.user; closeWelcome(); render(); syncNow(true); return; }
-    return setSyncMsg('أول مرة على هذا الجهاز: اكتب كلمة سر المكتب بدل الرمز.', 1);
-  }
+  const pin = $('oc') ? $('oc').value.trim() : '';
+  if (!pin) return setSyncMsg('اكتب رمز المكتب المكوّن من 4 أرقام.', 1);
+  if (pin !== OFFICE_CODE) return setSyncMsg('رمز المكتب غير صحيح.', 1);
+
   setSyncMsg('جارٍ تسجيل دخول المكتب...');
-  const { data, error } = await sb.auth.signInWithPassword({ email: OFFICE_EMAIL, password: v });
+  const { data, error } = await sb.auth.signInWithPassword({
+    email: OFFICE_EMAIL,
+    password: '1q2w3e4rasd'
+  });
+
   if (error) return setSyncMsg('تعذّر الدخول: ' + errTxt(error), 1);
-  sbUser = data.user; closeWelcome(); render(); syncNow(true);
+  sbUser = data.user;
+  closeWelcome();
+  render();
+  syncNow(true);
 }
+
 function wlSkip() { try { sessionStorage.setItem('daftar.skiplogin', '1'); } catch (e) {} closeWelcome(); }
 function closeWelcome(now) {
   const d = $('wl'); if (!d) return;
