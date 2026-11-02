@@ -1,4 +1,3 @@
-
 name: Build APK
 
 on:
@@ -12,30 +11,22 @@ permissions:
 jobs:
   build:
     runs-on: ubuntu-latest
-
     steps:
-      - name: Checkout
-        uses: actions/checkout@v4
+      - uses: actions/checkout@v4
 
-      - name: Setup Node
-        uses: actions/setup-node@v4
+      - uses: actions/setup-node@v4
         with:
           node-version: 20
 
-      - name: Setup Java
-        uses: actions/setup-java@v4
+      - uses: actions/setup-java@v4
         with:
           distribution: temurin
           java-version: 21
 
-      - name: Prepare Android
+      - name: Prepare web files and Android project
         run: |
           mkdir -p www
-          cp index.html www/
-          if [ -f sw.js ]; then
-            cp sw.js www/
-          fi
-
+          cp index.html sw.js www/
           npm install
           npx cap add android
           npx cap sync android
@@ -51,22 +42,20 @@ jobs:
           )
 
           if not candidates:
-              raise SystemExit("MainActivity not found")
+              raise SystemExit("ERROR: MainActivity.kt or MainActivity.java not found")
 
           path = candidates[0]
-
           with open(path, encoding="utf-8") as f:
               src = f.read()
 
           if "SYSTEM_UI_FLAG_IMMERSIVE_STICKY" in src:
-              print("Fullscreen already enabled")
+              print("Fullscreen is already configured")
               raise SystemExit(0)
 
           if path.endswith(".kt"):
-              code = """
+              fullscreen = '''
               override fun onCreate(savedInstanceState: android.os.Bundle?) {
                   super.onCreate(savedInstanceState)
-
                   window.decorView.systemUiVisibility = (
                       android.view.View.SYSTEM_UI_FLAG_FULLSCREEN
                       or android.view.View.SYSTEM_UI_FLAG_HIDE_NAVIGATION
@@ -76,13 +65,12 @@ jobs:
                       or android.view.View.SYSTEM_UI_FLAG_LAYOUT_STABLE
                   )
               }
-              """
+              '''
           else:
-              code = """
+              fullscreen = '''
               @Override
               public void onCreate(android.os.Bundle savedInstanceState) {
                   super.onCreate(savedInstanceState);
-
                   getWindow().getDecorView().setSystemUiVisibility(
                       android.view.View.SYSTEM_UI_FLAG_FULLSCREEN
                       | android.view.View.SYSTEM_UI_FLAG_HIDE_NAVIGATION
@@ -92,107 +80,68 @@ jobs:
                       | android.view.View.SYSTEM_UI_FLAG_LAYOUT_STABLE
                   );
               }
-              """
+              '''
 
           pos = src.rfind("}")
-
           if pos == -1:
-              raise SystemExit("MainActivity class invalid")
+              raise SystemExit("ERROR: MainActivity class closing brace not found")
 
-          src = src[:pos] + code + "\n" + src[pos:]
+          src = src[:pos] + fullscreen + "\\n" + src[pos:]
 
           with open(path, "w", encoding="utf-8") as f:
               f.write(src)
 
-          print("Fullscreen enabled:", path)
+          print("Fullscreen enabled in", path)
           PY
 
-      - name: Generate App Icon
+      - name: App icon
         run: |
           pip install pillow
-
-          python3 <<'PY'
-          import os
+          python3 - <<'PY'
+          import os, glob
           from PIL import Image, ImageDraw
-
-          if not os.path.exists("icon.png"):
-              raise SystemExit("icon.png not found")
-
-          img = Image.open("icon.png").convert("RGBA")
-
+          files = [f for f in ['icon.png','icon.jpg','icon.jpeg'] if os.path.exists(f)]
+          if not files:
+              raise SystemExit('ERROR: icon.png not found in repo root')
+          img = Image.open(files[0]).convert('RGBA')
           side = min(img.size)
-
-          img = img.crop((
-              (img.width-side)//2,
-              (img.height-side)//2,
-              (img.width+side)//2,
-              (img.height+side)//2
-          ))
-
-          res = "android/app/src/main/res"
-
-          sizes = {
-              "mdpi": (48,108),
-              "hdpi": (72,162),
-              "xhdpi": (96,216),
-              "xxhdpi": (144,324),
-              "xxxhdpi": (192,432)
-          }
-
-          for density, (s, fg) in sizes.items():
-
-              folder = f"{res}/mipmap-{density}"
+          img = img.crop(((img.width-side)//2, (img.height-side)//2, (img.width+side)//2, (img.height+side)//2))
+          res = 'android/app/src/main/res'
+          sizes = {'mdpi':(48,108),'hdpi':(72,162),'xhdpi':(96,216),'xxhdpi':(144,324),'xxxhdpi':(192,432)}
+          for d,(s,fg) in sizes.items():
+              folder = f'{res}/mipmap-{d}'
               os.makedirs(folder, exist_ok=True)
-
-              img.resize((fg,fg), Image.LANCZOS).save(
-                  f"{folder}/ic_launcher_foreground.png"
-              )
-
-              Image.new(
-                  "RGBA",
-                  (s,s),
-                  (116,31,53,255)
-              ).save(
-                  f"{folder}/ic_launcher_background.png"
-              )
-
+              img.resize((fg,fg), Image.LANCZOS).save(f'{folder}/ic_launcher_foreground.png')
+              Image.new('RGBA', (s,s), (116,31,53,255)).save(f'{folder}/ic_launcher_background.png')
               sq = img.resize((s,s), Image.LANCZOS)
-              sq.save(f"{folder}/ic_launcher.png")
-
-              mask = Image.new("L",(s*4,s*4),0)
-
-              ImageDraw.Draw(mask).ellipse(
-                  (0,0,s*4-1,s*4-1),
-                  fill=255
-              )
-
-              mask = mask.resize((s,s),Image.LANCZOS)
-
-              rd = Image.new("RGBA",(s,s),(0,0,0,0))
-              rd.paste(sq,(0,0),mask)
-
-              rd.save(f"{folder}/ic_launcher_round.png")
-
-          print("Icon generated")
+              sq.save(f'{folder}/ic_launcher.png')
+              mask = Image.new('L',(s*4,s*4),0)
+              ImageDraw.Draw(mask).ellipse((0,0,s*4-1,s*4-1), fill=255)
+              mask = mask.resize((s,s), Image.LANCZOS)
+              rd = Image.new('RGBA',(s,s),(0,0,0,0)); rd.paste(sq,(0,0),mask)
+              rd.save(f'{folder}/ic_launcher_round.png')
+          print('icon done from', files[0])
           PY
+          for f in android/app/src/main/res/values/ic_launcher_background.xml; do
+            [ -f "$f" ] && sed -i 's/#[0-9A-Fa-f]\{6\}/#741F35/' "$f"
+          done
+          true
 
-      - name: Build Debug APK
+      - name: Build debug APK
         run: |
           cd android
           chmod +x gradlew
           ./gradlew assembleDebug
 
       - name: Rename APK
-        run: |
-          cp android/app/build/outputs/apk/debug/app-debug.apk sijil-aqari.apk
+        run: cp android/app/build/outputs/apk/debug/app-debug.apk sijil-aqari.apk
 
-      - name: Upload APK
-        uses: actions/upload-artifact@v4
+      - uses: actions/upload-artifact@v4
         with:
           name: sijil-aqari-apk
           path: sijil-aqari.apk
 
-      - name: Publish Release
+      - name: Publish to Releases
         uses: softprops/action-gh-release@v2
         with:
           tag_name: v${{ github.run_number }}
