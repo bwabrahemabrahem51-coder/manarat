@@ -48,7 +48,9 @@ jobs:
           for d,(s,fg) in sizes.items():
               folder = f'{res}/mipmap-{d}'
               os.makedirs(folder, exist_ok=True)
+              # Adaptive icon XML requires BOTH foreground and background mipmap assets.
               img.resize((fg,fg), Image.LANCZOS).save(f'{folder}/ic_launcher_foreground.png')
+              Image.new('RGBA', (s,s), (116,31,53,255)).save(f'{folder}/ic_launcher_background.png')
               sq = img.resize((s,s), Image.LANCZOS)
               sq.save(f'{folder}/ic_launcher.png')
               mask = Image.new('L',(s*4,s*4),0)
