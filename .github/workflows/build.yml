@@ -14,8 +14,7 @@ jobs:
     runs-on: ubuntu-latest
 
     steps:
-      - name: Checkout
-        uses: actions/checkout@v4
+      - uses: actions/checkout@v4
 
       - name: Setup Node
         uses: actions/setup-node@v4
@@ -47,14 +46,8 @@ jobs:
           import glob
 
           candidates = (
-              glob.glob(
-                  'android/app/src/main/java/**/MainActivity.kt',
-                  recursive=True
-              )
-              + glob.glob(
-                  'android/app/src/main/java/**/MainActivity.java',
-                  recursive=True
-              )
+              glob.glob('android/app/src/main/java/**/MainActivity.kt', recursive=True)
+              + glob.glob('android/app/src/main/java/**/MainActivity.java', recursive=True)
           )
 
           if not candidates:
@@ -164,7 +157,6 @@ jobs:
               )
 
               sq = img.resize((s,s), Image.LANCZOS)
-
               sq.save(f"{folder}/ic_launcher.png")
 
               mask = Image.new("L",(s*4,s*4),0)
@@ -177,7 +169,6 @@ jobs:
               mask = mask.resize((s,s),Image.LANCZOS)
 
               rd = Image.new("RGBA",(s,s),(0,0,0,0))
-
               rd.paste(sq,(0,0),mask)
 
               rd.save(f"{folder}/ic_launcher_round.png")
