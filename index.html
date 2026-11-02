@@ -2940,17 +2940,24 @@ function wlForm(m) {
 }
 /* ===== تسجيل دخول المكتب ===== */
 const OFFICE_EMAIL = 'bwabrahemabrahem51@gmail.com'; /* حساب المكتب: كلمة السر تنكتب عند الدخول وما تنخزن بالكود */
+const OFFICE_CODE = '1974'; /* رمز المكتب (واجهة فقط): الدخول الحقيقي يتم بجلسة Supabase أو بكلمة السر */
 function officeIn() { try { return sessionStorage.getItem('daftar.office') === '1'; } catch (e) { return false; } }
 function wlOffice() {
   $('wlp').innerHTML = `<button class="o back" onclick="wlChoice()">${ICO.fwd} رجوع</button><h2>تسجيل دخول المكتب</h2>
-    <label>كلمة سر المكتب<input id="oc" type="password" autocomplete="off" onkeydown="if(event.key==='Enter')doOffice()"></label>
+    <label>رمز المكتب<input id="oc" type="password" autocomplete="off" onkeydown="if(event.key==='Enter')doOffice()"></label>
     <div id="syncmsg" class="err"></div>
     <button class="b" onclick="doOffice()">دخول</button>`;
   setTimeout(() => { const i = $('oc'); if (i) i.focus(); }, 60);
 }
 async function doOffice() {
   const v = $('oc') ? $('oc').value.trim() : '';
-  if (!v) return setSyncMsg('اكتب كلمة سر المكتب.', 1);
+  if (!v) return setSyncMsg('اكتب رمز المكتب.', 1);
+  if (v === OFFICE_CODE) {
+    let s = null;
+    try { const r = await sb.auth.getSession(); s = r.data && r.data.session; } catch (e) {}
+    if (s && s.user && String(s.user.email || '').toLowerCase() === OFFICE_EMAIL.toLowerCase()) { sbUser = s.user; closeWelcome(); render(); syncNow(true); return; }
+    return setSyncMsg('أول مرة على هذا الجهاز: اكتب كلمة سر المكتب بدل الرمز.', 1);
+  }
   setSyncMsg('جارٍ تسجيل دخول المكتب...');
   const { data, error } = await sb.auth.signInWithPassword({ email: OFFICE_EMAIL, password: v });
   if (error) return setSyncMsg('تعذّر الدخول: ' + errTxt(error), 1);
@@ -3443,6 +3450,10 @@ if ('serviceWorker' in navigator && location.protocol.indexOf('http') === 0) {
   }
   html:root[data-theme][data-theme][data-theme] body{padding-bottom:calc(env(safe-area-inset-bottom) + 84px)!important}
 }
+/* قوائم الاختيار (select) تتبع ثيم التطبيق مو ثيم الجهاز */
+:root{color-scheme:light}
+:root[data-theme="black"]{color-scheme:dark}
+select option{background:var(--card);color:var(--tx)}
 </style>
 </body>
 </html>
