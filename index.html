@@ -1112,7 +1112,35 @@ main:has(.theme-toggle){max-width:780px!important}
   .hlist{grid-template-columns:repeat(auto-fill,minmax(340px,1fr))!important}
 }
 
-</style>
+
+
+/* قائمة اختيار الحي المخصصة: تحافظ على ألوان الثيم بدل نافذة النظام */
+.qhood-native{display:none!important}
+.qhood-field{position:relative}
+.qhood-display{
+  display:flex!important;align-items:center;justify-content:space-between;gap:12px;
+  width:100%;min-height:54px;padding:8px 0!important;
+  border:0!important;background:transparent!important;color:var(--tx)!important;
+  font:inherit!important;font-size:18px!important;font-weight:500!important;
+  text-align:right;box-shadow:none!important;cursor:pointer;
+}
+.qhood-chevron{color:var(--pri);font-size:25px;line-height:1}
+.qhood-sheet{max-height:min(82dvh,760px)!important;overflow:hidden!important}
+.qhood-head{display:flex;align-items:center;justify-content:space-between;gap:12px}
+.qhood-head h3{margin:0;color:var(--pri);font-size:20px}
+.qhood-list{overflow-y:auto;max-height:65dvh;padding:0 10px 12px}
+.qhood-option{
+  display:flex;align-items:center;justify-content:space-between;gap:14px;
+  width:100%;min-height:58px;padding:12px 14px;
+  border:0;border-bottom:1px solid color-mix(in srgb,var(--bd) 75%,transparent);
+  border-radius:0;background:var(--card);color:var(--tx);
+  font:inherit;font-size:17px;text-align:right;cursor:pointer;
+}
+.qhood-option:active,.qhood-option.selected{
+  background:color-mix(in srgb,var(--pri) 12%,var(--card));
+}
+.qhood-radio{color:var(--pri);font-size:21px;min-width:24px;text-align:center}
+\n</style>
 <script>
 /* وجه العرض: auto | phone | laptop */
 (function () {
@@ -1195,7 +1223,35 @@ label input,label select,label textarea,input,select,textarea{accent-color:var(-
 :root[data-theme="white"]{--hood1:#D94336;--hood2:#F27B6E;--hoodtext:#FFFFFF}
 :root[data-theme="black"],:root[data-theme="dark"]{--hood1:#111111;--hood2:#252525;--hoodtext:#FFFFFF}
 @media(max-width:390px){.home-tools{grid-template-columns:minmax(0,1fr) auto;gap:7px}.home-tools .sbox{padding:0 10px;gap:7px}.home-tools .home-add{padding:0 10px;font-size:14px}.home-tools .home-add span{font-size:14px}}
-</style>
+
+
+/* قائمة اختيار الحي المخصصة: تحافظ على ألوان الثيم بدل نافذة النظام */
+.qhood-native{display:none!important}
+.qhood-field{position:relative}
+.qhood-display{
+  display:flex!important;align-items:center;justify-content:space-between;gap:12px;
+  width:100%;min-height:54px;padding:8px 0!important;
+  border:0!important;background:transparent!important;color:var(--tx)!important;
+  font:inherit!important;font-size:18px!important;font-weight:500!important;
+  text-align:right;box-shadow:none!important;cursor:pointer;
+}
+.qhood-chevron{color:var(--pri);font-size:25px;line-height:1}
+.qhood-sheet{max-height:min(82dvh,760px)!important;overflow:hidden!important}
+.qhood-head{display:flex;align-items:center;justify-content:space-between;gap:12px}
+.qhood-head h3{margin:0;color:var(--pri);font-size:20px}
+.qhood-list{overflow-y:auto;max-height:65dvh;padding:0 10px 12px}
+.qhood-option{
+  display:flex;align-items:center;justify-content:space-between;gap:14px;
+  width:100%;min-height:58px;padding:12px 14px;
+  border:0;border-bottom:1px solid color-mix(in srgb,var(--bd) 75%,transparent);
+  border-radius:0;background:var(--card);color:var(--tx);
+  font:inherit;font-size:17px;text-align:right;cursor:pointer;
+}
+.qhood-option:active,.qhood-option.selected{
+  background:color-mix(in srgb,var(--pri) 12%,var(--card));
+}
+.qhood-radio{color:var(--pri);font-size:21px;min-width:24px;text-align:center}
+\n</style>
 
 
 <style id="laptop-layout-override">
@@ -1218,7 +1274,35 @@ label input,label select,label textarea,input,select,textarea{accent-color:var(-
   .bottom-nav { width: 240px !important; }
   button.b.fab { right: 280px !important; inset-inline-end: 280px !important; }
 }
-</style>
+
+
+/* قائمة اختيار الحي المخصصة: تحافظ على ألوان الثيم بدل نافذة النظام */
+.qhood-native{display:none!important}
+.qhood-field{position:relative}
+.qhood-display{
+  display:flex!important;align-items:center;justify-content:space-between;gap:12px;
+  width:100%;min-height:54px;padding:8px 0!important;
+  border:0!important;background:transparent!important;color:var(--tx)!important;
+  font:inherit!important;font-size:18px!important;font-weight:500!important;
+  text-align:right;box-shadow:none!important;cursor:pointer;
+}
+.qhood-chevron{color:var(--pri);font-size:25px;line-height:1}
+.qhood-sheet{max-height:min(82dvh,760px)!important;overflow:hidden!important}
+.qhood-head{display:flex;align-items:center;justify-content:space-between;gap:12px}
+.qhood-head h3{margin:0;color:var(--pri);font-size:20px}
+.qhood-list{overflow-y:auto;max-height:65dvh;padding:0 10px 12px}
+.qhood-option{
+  display:flex;align-items:center;justify-content:space-between;gap:14px;
+  width:100%;min-height:58px;padding:12px 14px;
+  border:0;border-bottom:1px solid color-mix(in srgb,var(--bd) 75%,transparent);
+  border-radius:0;background:var(--card);color:var(--tx);
+  font:inherit;font-size:17px;text-align:right;cursor:pointer;
+}
+.qhood-option:active,.qhood-option.selected{
+  background:color-mix(in srgb,var(--pri) 12%,var(--card));
+}
+.qhood-radio{color:var(--pri);font-size:21px;min-width:24px;text-align:center}
+\n</style>
 
 <style id="laptop-fields-rtl">
 /* نسخة اللابتوب: كل الحقول تبدأ من اليمين (RTL) */
@@ -1235,7 +1319,35 @@ label input,label select,label textarea,input,select,textarea{accent-color:var(-
   .ffoot { direction: rtl !important; }
   button.b.fab { left: 36px !important; right: auto !important; inset-inline-end: auto !important; inset-inline-start: auto !important; width: auto !important; }
 }
-</style>
+
+
+/* قائمة اختيار الحي المخصصة: تحافظ على ألوان الثيم بدل نافذة النظام */
+.qhood-native{display:none!important}
+.qhood-field{position:relative}
+.qhood-display{
+  display:flex!important;align-items:center;justify-content:space-between;gap:12px;
+  width:100%;min-height:54px;padding:8px 0!important;
+  border:0!important;background:transparent!important;color:var(--tx)!important;
+  font:inherit!important;font-size:18px!important;font-weight:500!important;
+  text-align:right;box-shadow:none!important;cursor:pointer;
+}
+.qhood-chevron{color:var(--pri);font-size:25px;line-height:1}
+.qhood-sheet{max-height:min(82dvh,760px)!important;overflow:hidden!important}
+.qhood-head{display:flex;align-items:center;justify-content:space-between;gap:12px}
+.qhood-head h3{margin:0;color:var(--pri);font-size:20px}
+.qhood-list{overflow-y:auto;max-height:65dvh;padding:0 10px 12px}
+.qhood-option{
+  display:flex;align-items:center;justify-content:space-between;gap:14px;
+  width:100%;min-height:58px;padding:12px 14px;
+  border:0;border-bottom:1px solid color-mix(in srgb,var(--bd) 75%,transparent);
+  border-radius:0;background:var(--card);color:var(--tx);
+  font:inherit;font-size:17px;text-align:right;cursor:pointer;
+}
+.qhood-option:active,.qhood-option.selected{
+  background:color-mix(in srgb,var(--pri) 12%,var(--card));
+}
+.qhood-radio{color:var(--pri);font-size:21px;min-width:24px;text-align:center}
+\n</style>
 
 <style id="laptop-nav-right">
 /* لابتوب: القائمة الجانبية على اليمين والمحتوى بجانبها */
@@ -1256,7 +1368,35 @@ label input,label select,label textarea,input,select,textarea{accent-color:var(-
   main { margin: 0 var(--navw) 0 0 !important; }
   button.b.fab { left: 36px !important; right: auto !important; inset-inline-start: auto !important; inset-inline-end: auto !important; }
 }
-</style>
+
+
+/* قائمة اختيار الحي المخصصة: تحافظ على ألوان الثيم بدل نافذة النظام */
+.qhood-native{display:none!important}
+.qhood-field{position:relative}
+.qhood-display{
+  display:flex!important;align-items:center;justify-content:space-between;gap:12px;
+  width:100%;min-height:54px;padding:8px 0!important;
+  border:0!important;background:transparent!important;color:var(--tx)!important;
+  font:inherit!important;font-size:18px!important;font-weight:500!important;
+  text-align:right;box-shadow:none!important;cursor:pointer;
+}
+.qhood-chevron{color:var(--pri);font-size:25px;line-height:1}
+.qhood-sheet{max-height:min(82dvh,760px)!important;overflow:hidden!important}
+.qhood-head{display:flex;align-items:center;justify-content:space-between;gap:12px}
+.qhood-head h3{margin:0;color:var(--pri);font-size:20px}
+.qhood-list{overflow-y:auto;max-height:65dvh;padding:0 10px 12px}
+.qhood-option{
+  display:flex;align-items:center;justify-content:space-between;gap:14px;
+  width:100%;min-height:58px;padding:12px 14px;
+  border:0;border-bottom:1px solid color-mix(in srgb,var(--bd) 75%,transparent);
+  border-radius:0;background:var(--card);color:var(--tx);
+  font:inherit;font-size:17px;text-align:right;cursor:pointer;
+}
+.qhood-option:active,.qhood-option.selected{
+  background:color-mix(in srgb,var(--pri) 12%,var(--card));
+}
+.qhood-radio{color:var(--pri);font-size:21px;min-width:24px;text-align:center}
+\n</style>
 
 <style id="reqs-nav">
 @media (max-width: 899px) {
@@ -1291,7 +1431,35 @@ body{-webkit-font-smoothing:antialiased;text-rendering:optimizeSpeed}
 .sheet{overflow-x:hidden}
 :root[data-bigtext] .sheet>.acts{grid-auto-flow:row!important;grid-template-columns:repeat(2,minmax(0,1fr))!important}
 :root[data-bigtext] .sheet>.acts button{min-width:0;padding:0 6px!important;height:auto!important;min-height:50px;white-space:normal;line-height:1.25}
-</style>
+
+
+/* قائمة اختيار الحي المخصصة: تحافظ على ألوان الثيم بدل نافذة النظام */
+.qhood-native{display:none!important}
+.qhood-field{position:relative}
+.qhood-display{
+  display:flex!important;align-items:center;justify-content:space-between;gap:12px;
+  width:100%;min-height:54px;padding:8px 0!important;
+  border:0!important;background:transparent!important;color:var(--tx)!important;
+  font:inherit!important;font-size:18px!important;font-weight:500!important;
+  text-align:right;box-shadow:none!important;cursor:pointer;
+}
+.qhood-chevron{color:var(--pri);font-size:25px;line-height:1}
+.qhood-sheet{max-height:min(82dvh,760px)!important;overflow:hidden!important}
+.qhood-head{display:flex;align-items:center;justify-content:space-between;gap:12px}
+.qhood-head h3{margin:0;color:var(--pri);font-size:20px}
+.qhood-list{overflow-y:auto;max-height:65dvh;padding:0 10px 12px}
+.qhood-option{
+  display:flex;align-items:center;justify-content:space-between;gap:14px;
+  width:100%;min-height:58px;padding:12px 14px;
+  border:0;border-bottom:1px solid color-mix(in srgb,var(--bd) 75%,transparent);
+  border-radius:0;background:var(--card);color:var(--tx);
+  font:inherit;font-size:17px;text-align:right;cursor:pointer;
+}
+.qhood-option:active,.qhood-option.selected{
+  background:color-mix(in srgb,var(--pri) 12%,var(--card));
+}
+.qhood-radio{color:var(--pri);font-size:21px;min-width:24px;text-align:center}
+\n</style>
 <link href="https://fonts.googleapis.com/css2?family=El+Messiri:wght@500;600;700&display=swap" rel="stylesheet">
 <style id="luxe-2026">
 /* =====================================================================
@@ -1549,7 +1717,35 @@ html:root[data-theme][data-theme] .wl-panel{background:var(--card);border-color:
 html:root[data-theme][data-theme] .wl-panel h2{font:700 24px var(--fd)}
 html:root[data-theme][data-theme] .wl-panel .b,html:root[data-theme][data-theme] .wl-panel .o{border-radius:17px!important}
 
-</style>
+
+
+/* قائمة اختيار الحي المخصصة: تحافظ على ألوان الثيم بدل نافذة النظام */
+.qhood-native{display:none!important}
+.qhood-field{position:relative}
+.qhood-display{
+  display:flex!important;align-items:center;justify-content:space-between;gap:12px;
+  width:100%;min-height:54px;padding:8px 0!important;
+  border:0!important;background:transparent!important;color:var(--tx)!important;
+  font:inherit!important;font-size:18px!important;font-weight:500!important;
+  text-align:right;box-shadow:none!important;cursor:pointer;
+}
+.qhood-chevron{color:var(--pri);font-size:25px;line-height:1}
+.qhood-sheet{max-height:min(82dvh,760px)!important;overflow:hidden!important}
+.qhood-head{display:flex;align-items:center;justify-content:space-between;gap:12px}
+.qhood-head h3{margin:0;color:var(--pri);font-size:20px}
+.qhood-list{overflow-y:auto;max-height:65dvh;padding:0 10px 12px}
+.qhood-option{
+  display:flex;align-items:center;justify-content:space-between;gap:14px;
+  width:100%;min-height:58px;padding:12px 14px;
+  border:0;border-bottom:1px solid color-mix(in srgb,var(--bd) 75%,transparent);
+  border-radius:0;background:var(--card);color:var(--tx);
+  font:inherit;font-size:17px;text-align:right;cursor:pointer;
+}
+.qhood-option:active,.qhood-option.selected{
+  background:color-mix(in srgb,var(--pri) 12%,var(--card));
+}
+.qhood-radio{color:var(--pri);font-size:21px;min-width:24px;text-align:center}
+\n</style>
 </head>
 <body>
 <div id="app"></div>
@@ -3313,8 +3509,10 @@ function quickView() {
       </details>
 
       <div class="fbody quick-form" style="overflow:visible;padding:0" oninput="quickClean(event)">
-        <label class="fld sel" id="qf-qk"><span>الحي *</span>
-          <select id="qk"><option value="">اختر الحي</option>${hoodOpts}</select></label>
+        <label class="fld sel qhood-field" id="qf-qk"><span>الحي *</span>
+          <select id="qk" class="qhood-native" aria-hidden="true" tabindex="-1"><option value="">اختر الحي</option>${hoodOpts}</select>
+          <button type="button" id="qk-display" class="qhood-display" onclick="quickOpenHood()">اختر الحي <span class="qhood-chevron">⌄</span></button>
+        </label>
         <label class="fld sel" id="qf-qt"><span>نوع العقار *</span>
           <select id="qt">${typeOpts}</select></label>
         <label class="fld" id="qf-qn"><span>رقم القطعة *</span><input id="qn" autocomplete="off"></label>
@@ -3334,6 +3532,38 @@ function quickView() {
       <button class="b quick-add" onclick="quickSaveProperty()">${ICO.plus} إضافة العقار</button>
       <div id="quickSuccess" class="quick-success"></div>
     </div>`, '', false, true);
+}
+
+function quickOpenHood() {
+  const select = $('qk');
+  if (!select) return;
+  const options = Array.from(select.options).filter(o => o.value !== '');
+  const current = select.value;
+  const rows = options.map(o => `
+    <button type="button" class="qhood-option ${o.value === current ? 'selected' : ''}"
+      onclick="quickSetHood('${esc(o.value)}')">
+      <span>${esc(o.textContent)}</span>
+      <span class="qhood-radio">${o.value === current ? '●' : '○'}</span>
+    </button>
+  `).join('');
+  modal(`
+    <div class="fhead pg qhood-head">
+      <h3>اختر الحي</h3>
+      <button class="x" type="button" onclick="closeModal()" aria-label="إغلاق">×</button>
+    </div>
+    <div class="qhood-list">${rows}</div>
+  `, 'qhood-sheet');
+}
+
+function quickSetHood(value) {
+  const select = $('qk');
+  const display = $('qk-display');
+  if (!select || !display) return;
+  select.value = String(value);
+  const option = select.options[select.selectedIndex];
+  display.innerHTML = `${esc(option ? option.textContent : 'اختر الحي')} <span class="qhood-chevron">⌄</span>`;
+  quickClean({target: select});
+  closeModal();
 }
 
 function quickClean(e) {
@@ -3473,6 +3703,34 @@ if ('serviceWorker' in navigator && location.protocol.indexOf('http') === 0) {
 :root{color-scheme:light}
 :root[data-theme="black"]{color-scheme:dark}
 select option{background:var(--card);color:var(--tx)}
-</style>
+
+
+/* قائمة اختيار الحي المخصصة: تحافظ على ألوان الثيم بدل نافذة النظام */
+.qhood-native{display:none!important}
+.qhood-field{position:relative}
+.qhood-display{
+  display:flex!important;align-items:center;justify-content:space-between;gap:12px;
+  width:100%;min-height:54px;padding:8px 0!important;
+  border:0!important;background:transparent!important;color:var(--tx)!important;
+  font:inherit!important;font-size:18px!important;font-weight:500!important;
+  text-align:right;box-shadow:none!important;cursor:pointer;
+}
+.qhood-chevron{color:var(--pri);font-size:25px;line-height:1}
+.qhood-sheet{max-height:min(82dvh,760px)!important;overflow:hidden!important}
+.qhood-head{display:flex;align-items:center;justify-content:space-between;gap:12px}
+.qhood-head h3{margin:0;color:var(--pri);font-size:20px}
+.qhood-list{overflow-y:auto;max-height:65dvh;padding:0 10px 12px}
+.qhood-option{
+  display:flex;align-items:center;justify-content:space-between;gap:14px;
+  width:100%;min-height:58px;padding:12px 14px;
+  border:0;border-bottom:1px solid color-mix(in srgb,var(--bd) 75%,transparent);
+  border-radius:0;background:var(--card);color:var(--tx);
+  font:inherit;font-size:17px;text-align:right;cursor:pointer;
+}
+.qhood-option:active,.qhood-option.selected{
+  background:color-mix(in srgb,var(--pri) 12%,var(--card));
+}
+.qhood-radio{color:var(--pri);font-size:21px;min-width:24px;text-align:center}
+\n</style>
 </body>
 </html>
