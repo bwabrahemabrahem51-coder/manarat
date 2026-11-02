@@ -29,7 +29,24 @@ jobs:
           cp index.html sw.js www/
           npm install
           npx cap add android
-          npx cap sync android
+
+      - name: App icon
+        run: |
+          ICON=""
+          [ -f icon.png ] && ICON=icon.png
+          [ -z "$ICON" ] && [ -f icon.jpg ] && ICON=icon.jpg
+          if [ -n "$ICON" ]; then
+            EXT="${ICON##*.}"
+            mkdir -p assets
+            cp "$ICON" "assets/icon-only.$EXT"
+            cp "$ICON" "assets/icon-foreground.$EXT"
+            npx @capacitor/assets generate --android --iconBackgroundColor '#ffffff' --iconBackgroundColorDark '#ffffff'
+          else
+            echo "No icon.png found, using default icon"
+          fi
+
+      - name: Sync
+        run: npx cap sync android
 
       - name: Build debug APK
         run: |
@@ -38,16 +55,16 @@ jobs:
           ./gradlew assembleDebug
 
       - name: Rename APK
-        run: cp android/app/build/outputs/apk/debug/app-debug.apk manarat-hadba.apk
+        run: cp android/app/build/outputs/apk/debug/app-debug.apk sijil-aqari.apk
 
       - uses: actions/upload-artifact@v4
         with:
-          name: manarat-hadba-apk
-          path: manarat-hadba.apk
+          name: sijil-aqari-apk
+          path: sijil-aqari.apk
 
       - name: Publish to Releases
         uses: softprops/action-gh-release@v2
         with:
           tag_name: v${{ github.run_number }}
-          name: منارة الحدباء v${{ github.run_number }}
-          files: manarat-hadba.apk
+          name: سجل العقاري v${{ github.run_number }}
+          files: sijil-aqari.apk
