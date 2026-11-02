@@ -29,24 +29,39 @@ jobs:
           cp index.html sw.js www/
           npm install
           npx cap add android
+          npx cap sync android
 
       - name: App icon
         run: |
-          ICON=""
-          [ -f icon.png ] && ICON=icon.png
-          [ -z "$ICON" ] && [ -f icon.jpg ] && ICON=icon.jpg
-          if [ -n "$ICON" ]; then
-            EXT="${ICON##*.}"
-            mkdir -p assets
-            cp "$ICON" "assets/icon-only.$EXT"
-            cp "$ICON" "assets/icon-foreground.$EXT"
-            npx @capacitor/assets generate --android --iconBackgroundColor '#ffffff' --iconBackgroundColorDark '#ffffff'
-          else
-            echo "No icon.png found, using default icon"
-          fi
-
-      - name: Sync
-        run: npx cap sync android
+          pip install pillow
+          python3 - <<'PY'
+          import os, glob
+          from PIL import Image, ImageDraw
+          files = [f for f in ['icon.png','icon.jpg','icon.jpeg'] if os.path.exists(f)]
+          if not files:
+              raise SystemExit('ERROR: icon.png not found in repo root')
+          img = Image.open(files[0]).convert('RGBA')
+          side = min(img.size)
+          img = img.crop(((img.width-side)//2, (img.height-side)//2, (img.width+side)//2, (img.height+side)//2))
+          res = 'android/app/src/main/res'
+          sizes = {'mdpi':(48,108),'hdpi':(72,162),'xhdpi':(96,216),'xxhdpi':(144,324),'xxxhdpi':(192,432)}
+          for d,(s,fg) in sizes.items():
+              folder = f'{res}/mipmap-{d}'
+              os.makedirs(folder, exist_ok=True)
+              img.resize((fg,fg), Image.LANCZOS).save(f'{folder}/ic_launcher_foreground.png')
+              sq = img.resize((s,s), Image.LANCZOS)
+              sq.save(f'{folder}/ic_launcher.png')
+              mask = Image.new('L',(s*4,s*4),0)
+              ImageDraw.Draw(mask).ellipse((0,0,s*4-1,s*4-1), fill=255)
+              mask = mask.resize((s,s), Image.LANCZOS)
+              rd = Image.new('RGBA',(s,s),(0,0,0,0)); rd.paste(sq,(0,0),mask)
+              rd.save(f'{folder}/ic_launcher_round.png')
+          print('icon done from', files[0])
+          PY
+          for f in android/app/src/main/res/values/ic_launcher_background.xml; do
+            [ -f "$f" ] && sed -i 's/#[0-9A-Fa-f]\{6\}/#741F35/' "$f"
+          done
+          true
 
       - name: Build debug APK
         run: |
